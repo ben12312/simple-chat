@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import "./App.css";
+import {  createUserWithEmailAndPassword  } from 'firebase/auth';
+import { auth } from './firebase'
 
 function Register() {
     const initialValues = {
@@ -23,6 +25,23 @@ function Register() {
         setFormErrors(validate(formValues));
         setIsSubmit(true);
     };
+
+    const registerButton = async (e) => {
+        await createUserWithEmailAndPassword(auth, formValues.email, formValues.password)
+        .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            console.log(user);
+            navigate("/login")
+            // ...
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage);
+            // ..
+        });
+    }
 
     useEffect(() => {
         console.log(formErrors);
@@ -96,7 +115,7 @@ function Register() {
                             />
                         </div>
                         <p>{formErrors.confirmPassword}</p>
-                        <button className="fluid ui button blue">Submit</button>
+                        <button className="fluid ui button blue" onClick={registerButton}>Submit</button>
                     </div>
                 </form>
                 <div className="text">
