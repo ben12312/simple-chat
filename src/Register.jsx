@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import "./App.css";
 
-function App() {
+function Register() {
     const initialValues = {
-        username: "",
         email: "",
         password: "",
         confirmPassword: "",
@@ -11,6 +11,7 @@ function App() {
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -32,14 +33,9 @@ function App() {
     const validate = (values) => {
         const errors = {};
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-        if (!values.username) {
-            errors.username = "Username is required!";
-        }
         if (!values.email) {
             errors.email = "Email is required!";
-        } else if (!regex.test(values.email)) {
-            errors.email = "This is not a valid email format!";
-        }
+        } else if (!regex.test(values.email)) errors.email = "This is not a valid email format!";
         if (!values.password) {
             errors.password = "Password is required";
         } else if (values.password.length < 4) {
@@ -47,9 +43,7 @@ function App() {
         } else if (values.password.length > 10) {
             errors.password = "Password cannot exceed more than 10 characters";
         }
-        if (values.password !== values.confirmPassword) {
-            errors.confirmPassword = "Those passwords didn’t match. Try again.";
-        }
+        if (values.password !== values.confirmPassword) errors.confirmPassword = "Those passwords didn’t match. Try again.";
         return errors;
     };
 
@@ -69,17 +63,6 @@ function App() {
                     <h1>Sign Up</h1>
                     <div className="ui divider"></div>
                     <div className="ui form">
-                        <div className="field">
-                            <label>Username</label>
-                            <input
-                                type="text"
-                                name="username"
-                                placeholder="Choose a username"
-                                value={formValues.username}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <p>{formErrors.username}</p>
                         <div className="field">
                             <label>Email</label>
                             <input
@@ -117,11 +100,11 @@ function App() {
                     </div>
                 </form>
                 <div className="text">
-                    Already have an account? <span>Login</span>
+                    Already have an account? <span onClick={ (e) => navigate('/login') }>Login</span>
                 </div>
             </div>{" "}
         </>
     );
 }
 
-export default App;
+export default Register;
