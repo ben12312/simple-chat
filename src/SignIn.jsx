@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import "./App.css";
+import axios from "./lib/axios";
 
 function SignIn() {
     const initialValues = {
@@ -17,6 +18,15 @@ function SignIn() {
         const { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
     };
+
+    const loginButton = async () => {
+        let response = await axios({
+            method: 'POST',
+            url: `/users/login`,
+            data: formValues
+        })
+        console.log(response);
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -84,7 +94,7 @@ function SignIn() {
                             />
                         </div>
                         <p>{formErrors.password}</p>
-                        <button className="fluid ui button blue">Submit</button>
+                        <button className="fluid ui button blue" onClick={loginButton}>Submit</button>
                     </div>
                 </form>
                 <div className="text">
