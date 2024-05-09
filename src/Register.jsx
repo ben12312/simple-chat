@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import "./App.css";
-import {  createUserWithEmailAndPassword  } from 'firebase/auth';
-import { auth } from './firebase'
+import axios from "./lib/axios";
 
 function Register() {
     const initialValues = {
@@ -27,20 +26,13 @@ function Register() {
     };
 
     const registerButton = async (e) => {
-        await createUserWithEmailAndPassword(auth, formValues.email, formValues.password)
-        .then((userCredential) => {
-            // Signed in
-            const user = userCredential.user;
-            console.log(user);
-            navigate("/login")
-            // ...
+        let response = await axios({
+            method: 'POST',
+            url: `/user/login`,
+            data: formValues
         })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode, errorMessage);
-            // ..
-        });
+        navigate("/")
+        console.log(formValues,response);
     }
 
     useEffect(() => {

@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import "./App.css";
 import axios from "./lib/axios";
-import {  signInWithEmailAndPassword  } from 'firebase/auth';
-import { auth } from './firebase'
 
 function SignIn() {
     const initialValues = {
@@ -22,24 +20,13 @@ function SignIn() {
     };
 
     const loginButton = async () => {
-        signInWithEmailAndPassword(auth, formValues.email, formValues.password)
-        .then(async(userCredential) => {
-            // Signed in
-            const user = userCredential.user;
-            let response = await axios({
-                method: 'POST',
-                url: `/users/login`,
-                data: formValues
-            })
-            console.log(response);
-            navigate("/home")
-            console.log(user);
+        let response = await axios({
+            method: 'POST',
+            url: `/user/login`,
+            data: formValues
         })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode, errorMessage)
-        });
+        navigate("/")
+        console.log(formValues,response);
     }
 
     const handleSubmit = (e) => {
