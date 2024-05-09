@@ -2,6 +2,8 @@
 
 <hr>
 
-See live @ [pb-react-form.netlify.app](https://pb-react-form.netlify.app)
+1. clone repo : `git clone https://github.com/ben12312/simple-chat.git`
+2. install in terminal : `npm i`
+3. run client : `npm run start`
 
-![ScreenShot](https://raw.githubusercontent.com/pawelborkar/react-login-form/master/ScreenShot.png)
+Thank you

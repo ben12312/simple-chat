@@ -25,8 +25,9 @@ function SignIn() {
             url: `/user/login`,
             data: formValues
         })
+        if (response.data === 'wrong password' || response.data === 'user not found') return setFormErrors({ password: 'Email or password incorrect' })
+        if (response.data) localStorage.setItem('accessToken', JSON.stringify(response.data))
         navigate("/")
-        console.log(formValues,response);
     }
 
     const handleSubmit = (e) => {
@@ -41,6 +42,7 @@ function SignIn() {
             console.log(formValues);
         }
     }, [formErrors, formValues, isSubmit]);
+    
     const validate = (values) => {
         const errors = {};
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
@@ -50,7 +52,7 @@ function SignIn() {
         if (!values.password) {
             errors.password = "Password is required";
         } else if (values.password.length < 4) {
-            errors.password = "Password must be more than 4 characters";
+            // errors.password = "Password must be more than 4 characters";
         } else if (values.password.length > 10) {
             errors.password = "Password cannot exceed more than 10 characters";
         }
