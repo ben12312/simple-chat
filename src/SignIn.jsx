@@ -101,7 +101,7 @@ function SignIn() {
                     </div>
                 </form>
                 <div className="text">
-                    Not have an account yet? <span onClick={ (e) => navigate('/register') }>Login</span>
+                    Not have an account yet? <span onClick={ (e) => navigate('/register') }>Sign Up</span>
                 </div>
             </div>{" "}
         </>

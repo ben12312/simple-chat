@@ -32,21 +32,16 @@ class Chat extends Component {
       }
     })
     this.socketForChat(newMessage)
-    this.setState((prevState) => {
-      const newMessage = {
-        userId: 2,
-        message: ['resp message'],
-        time: `10:10`
-      }
-      return {   
-        messages: [...prevState.messages, newMessage]
-      }
-    })
   }
   
   socketForChat = (param) => { // SEND CHAT TO BE
     const socket = io(SERVER_URL, { transports: ['websocket'] });
     socket.emit('send_chat', { message: param });
+    socket.on('reply_chat', (data) => {
+      this.setState((prevState) => { // ADD TO CHAT LIST
+        return { messages: [...prevState.messages, data]}
+      })
+    })
   }
 
   handleToggle = () => {

@@ -28,7 +28,7 @@ function Register() {
     const registerButton = async (e) => {
         let response = await axios({
             method: 'POST',
-            url: `/user/login`,
+            url: `/user/register`,
             data: formValues
         })
         navigate("/")
@@ -111,7 +111,7 @@ function Register() {
                     </div>
                 </form>
                 <div className="text">
-                    Already have an account? <span onClick={ (e) => navigate('/login') }>Login</span>
+                    Already have an account? <span onClick={ (e) => navigate('/login') }>Sign In</span>
                 </div>
             </div>{" "}
         </>

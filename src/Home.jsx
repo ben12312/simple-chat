@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 
 function Home(params) {
     const navigate = useNavigate();
-    const [message, setMessage] = useState('');
     const [userLogin] = useState(JSON.parse(localStorage.getItem('accessToken')));
     const [initData, setInitData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -23,6 +22,11 @@ function Home(params) {
         // console.log('initData',response.data);
         setInitData(response.data);
         setIsLoading(false);
+    }
+    
+    function logoutButton () {
+        localStorage.removeItem('accessToken');
+        return navigate("/login")
     }
 
     useEffect(() => {
@@ -43,8 +47,7 @@ function Home(params) {
 
     return (
         <div>
-            <h1>Websocket</h1>
-            <p>{JSON.stringify(message)}</p>
+            <h3 style={{ textAlign: 'right', margin: 20}}><a onClick={logoutButton} style={{ color: 'grey'}}>logout</a></h3>
             {
                 isLoading ? <></> : <Chat initChat={initData}/> // RENDER AFTER LOAD
             }
